@@ -6,11 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["middlewares", "routes", "bd mongo"],
+  "keywords": [
+    "middlewares",
+    "routes",
+    "bd mongo"
+  ],
   "author": "Corina Jimenez",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "color": "^5.0.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
