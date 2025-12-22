@@ -1,13 +1,20 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import {dirname} from "path";
+import { fileURLToPath } from "url";
+import './dbConfig.js'; 
 
 export default class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT || 3000;
     this.middlewares();
-  }
+
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    // console.log(__dirname + '../../public');
+  this.app.use(express.static(__dirname + '/../../public'));
+}
 
   middlewares() {
     this.app.use(cors()); //permite escuchar conexiones remotas
