@@ -8,15 +8,30 @@ export const prueba = (req, res) => {
 export const crearServicio = async (req, res) => {
   try {
     //agregar validacion de datos
-    console.log(req)
-    console.log(req.body)
+    console.log(req);
+    console.log(req.body);
 
-    const servicioNuevo = new Servicio(req.body)
-    await servicioNuevo.save()
-    res.status(201).json({ mensaje: "servicio creado con exito", servicioNuevo });
-
+    const servicioNuevo = new Servicio(req.body);
+    await servicioNuevo.save();
+    res
+      .status(201)
+      .json({ mensaje: "servicio creado con exito", servicioNuevo });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ mensaje: "error interno del servidor al intentar crear unnuevo servicio" });
+    res.status(500).json({
+      mensaje: "error interno del servidor al intentar crear unnuevo servicio",
+    });
+  }
+};
+
+export const listarServicios = async (req, res) => {
+  try {
+    const servicios = await Servicio.find();
+    res.status(200).json(servicios);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      mensaje: "error interno del servidor al intentar listar los servicios",
+    });
   }
 };
