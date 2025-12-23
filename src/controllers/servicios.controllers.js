@@ -7,15 +7,16 @@ export const prueba = (req, res) => {
 
 export const crearServicio = async (req, res) => {
   try {
+    //agregar validacion de datos
     console.log(req)
     console.log(req.body)
 
     const servicioNuevo = new Servicio(req.body)
     await servicioNuevo.save()
-    res.staturs(201).json({ mensaje: "servicio creado con exito", servicioNuevo });
+    res.status(201).json({ mensaje: "servicio creado con exito", servicioNuevo });
 
   } catch (error) {
     console.log(error);
-    res.status(500).json({ mensaje: "error interno del servidor" });
+    res.status(500).json({ mensaje: "error interno del servidor al intentar crear unnuevo servicio" });
   }
 };
