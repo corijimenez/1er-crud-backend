@@ -75,3 +75,26 @@ export const editarServicio = async (req, res) => {
     });
   }
 };
+
+
+export const borrarServicio = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const servicioBuscado = await Servicio.findByIdAndDelete(req.params.id)
+    if (!servicioBuscado) {
+      return res
+        .status(404)
+        .json({ mensaje: "no se encontro el servicio con ese id" });
+    }
+    //aqui se borrara el servicio
+    console.log("Servicio eliminado:", servicioBuscado);
+    res.status(200).json({mensaje: "servicio eliminado correctamente"})
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      mensaje:
+        "error interno del servidor al intentar buscar el servicio por id",
+    });
+  }
+};
