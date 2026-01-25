@@ -20,6 +20,10 @@ const validacionServicio = [
       if (!servicioExistente) {
         return true; // El servicio no existe, la validación pasa
       }
+      if (req.params?.id && servicioExistente._id.toString()=== req.params.id) {
+        // el signo de pregunta es para verificar si id existe en los parametros
+        return true;
+      }
         throw new Error("El nombre del servicio ya existe en la base de datos");
     }),
   body("precio")
