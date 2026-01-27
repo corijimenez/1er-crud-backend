@@ -1,3 +1,4 @@
+import generarJWT from "../helpers/generarJWT.js";
 import Usuario from "../models/usuario.js"
 import bcrypt from "bcrypt";
 
@@ -49,7 +50,8 @@ export const login = async(req, res) =>{
             return res.status(401).json({mensaje: "credenciales incorrectas"})
         }
         //informar al front que debe logear al usuario
-        res.status(200).json({mensaje: "Login exitoso", nombre : usuarioBuscado.nombre})
+        const token = generarJWT(usuarioBuscado._id)
+        res.status(200).json({mensaje: "Login exitoso", nombre : usuarioBuscado.nombre, token})
 
     } catch (error) {
         console.error(error)
