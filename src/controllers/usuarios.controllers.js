@@ -21,4 +21,16 @@ try {
 }
 }
 
-export const listarUsuarios = (req, res)=>{}
+export const listarUsuarios = async (req, res)=>{
+try {
+    const listadoUsuarios = await Usuario.find()
+    if(listadoUsuarios.length===0){
+        return res.status(404).json({mensaje: "No hay usaurios registrados"})   
+    }    
+    res.status(200).json(listadoUsuarios);
+
+} catch (error) {
+    console.error(error)
+    res.status(500).json({mensaje: "ocurrio un error al listar los usuarios"})
+}
+}
