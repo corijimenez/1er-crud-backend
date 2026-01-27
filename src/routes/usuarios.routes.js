@@ -1,9 +1,10 @@
 import { Router }  from "express";
-import { listarUsuarios, crearUsuario} from "../controllers/usuarios.controllers.js";
+import { listarUsuarios, crearUsuario, login} from "../controllers/usuarios.controllers.js";
 const router = Router();
 
 //http://localhost:3000/api/usuarios/
 
 router.route("/").get(listarUsuarios).post(crearUsuario);
+router.route("/login").post(login)
 
 export default router;

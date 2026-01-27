@@ -23,7 +23,7 @@ try {
 
 export const listarUsuarios = async (req, res)=>{
 try {
-    const listadoUsuarios = await Usuario.find()
+    const listadoUsuarios = await Usuario.find() //encontrar todos
     if(listadoUsuarios.length===0){
         return res.status(404).json({mensaje: "No hay usaurios registrados"})   
     }    
@@ -33,4 +33,26 @@ try {
     console.error(error)
     res.status(500).json({mensaje: "ocurrio un error al listar los usuarios"})
 }
+}
+
+export const login = async(req, res) =>{
+    try {
+        const {email, password} = req.body;
+        //verificar el email
+        const usuarioBuscado = await Usuario.findOne({email:req.body.email})//encontrar uno solo, tmb se puede escribir -> await Usuario.findOne({email})
+        if(!usuarioBuscado){
+            return res.status(404).json({mensaje: "No se encontro el usuario"})
+        }
+        //verificar el password
+        const passwordValido = bcrypt.compareSync(password, usuarioBuscado.password)
+        if(!passwordValido){
+            return res.status(401).json({mensaje: "credenciales incorrectas"})
+        }
+        //informar al front que debe logear al usuario
+        res.status(200).json({mensaje: "Login exitoso", nombre : usuarioBuscado.nombre})
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({mensaje: "ocurrio un error al intentar iniciar sesion"})
+    }
 }
