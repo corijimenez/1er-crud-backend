@@ -14,25 +14,25 @@ const usuarioSchema = new Schema(
       required: true,
       unique: true,
       // agregar validacion de formato de email si es necesario
-      /*validate: {
+      validate: {
         validator: (valor) => {
-          return /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/.test(
+          return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
             valor
           );
         },
-      }, */
+      },
     },
     password: {
       type: String,
       required: true,
       // agregar validacion de formato de password si es necesario
-      /*validate: {
+       validate: {
         validator: (valor) => {
-          return /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/.test(
+          return /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,64}$/.test(
             valor
           );
         },
-      }, */
+      },
     },
   },
   {
