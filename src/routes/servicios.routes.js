@@ -9,6 +9,7 @@ import {
 } from "../controllers/servicios.controllers.js";
 import validacionServicio from "../middlewares/validacionServicio.js";
 import validacionIdServicio from "../middlewares/validacionIdServicio.js";
+import verificarJWT from "../middlewares/verificarJWT.js";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.route("/test").get(prueba);
 //http://localhost:3000/api/servicios/
 router
   .route("/")
-  .post([validacionServicio], crearServicio)
+  .post([verificarJWT ,validacionServicio], crearServicio)
   .get(listarServicios);
 router
   .route("/:id")
