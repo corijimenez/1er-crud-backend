@@ -1,4 +1,3 @@
-//modelo del servicio
 import mongoose, { Schema } from "mongoose";
 
 const servicioSchema = new Schema(
@@ -21,7 +20,7 @@ const servicioSchema = new Schema(
       required: true,
       validate: {
         validator: (valor) => {
-          return /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/.test(
+          return /^https:\/\/.+\.(jpg|jpeg|png|gif|webp|bmp|svg)$/.test(
             valor
           );
         },
@@ -32,7 +31,7 @@ const servicioSchema = new Schema(
       required: true,
       enum: ["Desarrollo Web", "Backend y API", "Consultoría", "Otros"],
     },
-    descripcion: {
+    descripcion_breve: {
       type: String,
       required: true,
       minLength: 5,
@@ -50,5 +49,6 @@ const servicioSchema = new Schema(
   }
 );
 
-const Servicio = mongoose.model('servicio', servicioSchema);
+const Servicio = mongoose.model('servicio',servicioSchema )
+
 export default Servicio;

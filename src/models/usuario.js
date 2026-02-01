@@ -1,4 +1,3 @@
-//modelo del usuario
 import mongoose, { Schema } from "mongoose";
 
 const usuarioSchema = new Schema(
@@ -13,7 +12,6 @@ const usuarioSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      // agregar validacion de formato de email si es necesario
       validate: {
         validator: (valor) => {
           return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
@@ -25,8 +23,7 @@ const usuarioSchema = new Schema(
     password: {
       type: String,
       required: true,
-      // agregar validacion de formato de password si es necesario
-       validate: {
+      validate: {
         validator: (valor) => {
           return /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,64}$/.test(
             valor
@@ -40,5 +37,6 @@ const usuarioSchema = new Schema(
   }
 );
 
-const Usuario = mongoose.model('usuario', usuarioSchema);
+const Usuario = mongoose.model('usuario',usuarioSchema )
+
 export default Usuario;

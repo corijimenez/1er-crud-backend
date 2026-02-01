@@ -7,70 +7,71 @@ const validacionServicio = [
     .notEmpty()
     .withMessage("El servicio es un dato obligatorio")
     .isLength({
-      min: 3,
+      min: 5,
       max: 100,
     })
-    .withMessage("El servicio debe tener entre 3 y 100 caracteres")
+    .withMessage("El servicio debe tener entre 5 y 100 caracteres")
     .isString()
-    .withMessage("El servicio debe ser una cadena de texto")
+    .withMessage("El servicio debe ser un texto")
     .custom(async (valor, { req }) => {
-      //todo: verificar que el nombre del servicio no exista en la base de datos
-      // valor representa el nombre del servicio que se esta intentando crear
       const servicioExistente = await Servicio.findOne({ servicio: valor });
       if (!servicioExistente) {
-        return true; // El servicio no existe, la validación pasa
-      }
-      if (req.params?.id && servicioExistente._id.toString()=== req.params.id) {
-        // el signo de pregunta es para verificar si id existe en los parametros
         return true;
       }
-        throw new Error("El nombre del servicio ya existe en la base de datos");
+      // pregunta para validar si estoy editando el mismo servicio
+      if(req.params?.id && servicioExistente._id.toString() === req.params.id ){
+        return true
+      }
+      throw new Error("El servicio ya existe en la base de datos");
     }),
   body("precio")
     .notEmpty()
     .withMessage("El precio es un dato obligatorio")
     .isNumeric()
-    .withMessage("El precio debe ser un nro")
+    .withMessage("El precio debe ser un numero")
     .isFloat({
       min: 50,
       max: 1000000,
     })
-    .withMessage("El precio debe estar entre 50 y 1000000"),
+    .withMessage("El precio debe estar entre $50 y $1000000"),
   body("imagen")
     .notEmpty()
     .withMessage("La imagen es un dato obligatorio")
     .isString()
     .withMessage("La imagen debe ser una cadena de texto")
-    .matches(
-      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
-    )
+    .matches(/^https:\/\/.+\.(jpg|jpeg|png|gif|webp|bmp|svg)$/)
     .withMessage(
-      "La imagen debe ser una URL válida que termine en .jpg, .jpeg, .png o .webp",
+      "La imagen debe ser una URL válida que termine con .jpg, .jpeg, .png, gif, .webp, bmp o svg"
     ),
-
   body("categoria")
     .notEmpty()
-    .withMessage("la categoria es un dato obligatorio")
+    .withMessage("La categoría es un dato obligatorio")
     .isString()
-    .withMessage("la categoria debe ser una cadena de texto")
+    .withMessage("La categoría debe ser una cadena de texto")
     .isIn(["Desarrollo Web", "Backend y API", "Consultoría", "Otros"])
     .withMessage(
-      "La categoria deberia ser uno de los siguientes valores: Desarrollo Web, Backend y API, Consultoría, Otros",
+      `La categoría debe ser uno de los siguientes valores: 'Desarrollo Web', 'Backend y API', 'Consultoría' u 'Otros'`
     ),
-  body("descripcion")
+  body("descripcion_breve")
     .notEmpty()
-    .withMessage("la descripcion es un dato obligatorio")
+    .withMessage("La descripcion breve es un dato obligatorio")
+    .isLength({
+      min: 5,
+      max: 250,
+    })
+    .withMessage("La descripcion breve debe tener entre 5 y 250 caracteres")
     .isString()
-    .withMessage("la descripcion debe ser una cadena de texto")
-    .isLength({ min: 5, max: 250 })
-    .withMessage("la descripcion debe tener entre 5 y 250 caracteres"),
+    .withMessage("La descripcion breve debe ser un texto"),
   body("descripcion_amplia")
     .notEmpty()
-    .withMessage("la descripcion_amplia es un dato obligatorio")
+    .withMessage("La descripcion amplia es un dato obligatorio")
+    .isLength({
+      min: 10,
+      max: 500,
+    })
+    .withMessage("La descripcion amplia debe tener entre 10 y 500 caracteres")
     .isString()
-    .withMessage("la descripcion_amplia debe ser una cadena de texto")
-    .isLength({ min: 10, max: 500 })
-    .withMessage("la descripcion_amplia debe tener entre 10 y 500 caracteres"),
+    .withMessage("La descripcion amplia debe ser un texto"),
   (req, res, next) => resultadoValidacion(req, res, next),
 ];
 
